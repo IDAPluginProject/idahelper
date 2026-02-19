@@ -38,12 +38,17 @@ def from_cast(expr: cexpr_t, typ: tinfo_t) -> cexpr_t:
 
 def from_var(var: var_ref_t) -> cexpr_t:
     """Create a cexpr_t from a var_ref_t."""
-    var_t: lvar_t = var.getv()
+    var_t: lvar_t = getv(var)
     var_expr = cexpr_t()
     var_expr.op = ida_hexrays.cot_var
     var_expr.v = var
     var_expr.type = var_t.type()
     return var_expr
+
+
+def getv(var: var_ref_t) -> lvar_t:
+    """Get the variable reference."""
+    return var.mba.vars[var.idx]
 
 
 def from_lvar_index(lvar_index: int, func: cfuncptr_t) -> cexpr_t:
